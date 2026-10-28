@@ -46,7 +46,7 @@ Maquette de l'interface : [Maquette_CDT sur Figma Make](https://www.figma.com/ma
 | Dossier | Contenu |
 |---|---|
 | `cadrage/` | Cahier des charges (`cahier_des_charges_cdt.docx`) |
-| `modelisation/` | Diagrammes UML (`diagrammes_uml_cdt.drawio`) : cas d'utilisation, classes, séquence, activité |
+| `modelisation/` | Diagrammes UML (`diagrammes_cdt_maintenance_et_installation_equipement.drawio`) : cas d'utilisation, classes, séquence, activité |
 
 Les diagrammes s'ouvrent avec [draw.io](https://app.diagrams.net) (Fichier > Ouvrir depuis > Appareil) ; chaque diagramme est un onglet du fichier.
 
