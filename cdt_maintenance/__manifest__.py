@@ -6,7 +6,10 @@
     "author": "Urie",
     "license": "LGPL-3",
     "depends": ["base", "mail", "contacts", "maintenance", "stock", "purchase", "project", "calendar"],
-    "data": [],
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+    ],
     "installable": True,
     "application": True,
 }

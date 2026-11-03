@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cdt_equipement_technicien,cdt.equipement technicien,model_cdt_equipement,group_cdt_technicien,1,1,0,0
+access_cdt_equipement_commercial,cdt.equipement commercial,model_cdt_equipement,group_cdt_commercial,1,1,1,0
+access_cdt_equipement_chef,cdt.equipement chef,model_cdt_equipement,group_cdt_chef,1,1,1,1
