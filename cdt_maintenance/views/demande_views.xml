@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cdt_demande_list" model="ir.ui.view">
+        <field name="name">cdt.demande.list</field>
+        <field name="model">cdt.demande</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date_demande"/>
+                <field name="equipement_id"/>
+                <field name="client_id"/>
+                <field name="origine"/>
+                <field name="urgence" widget="badge" decoration-danger="urgence == 'urgente'" decoration-warning="urgence == 'haute'"/>
+                <field name="statut" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cdt_demande_form" model="ir.ui.view">
+        <field name="name">cdt.demande.form</field>
+        <field name="model">cdt.demande</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_planifier" string="Planifier" type="object" class="btn-primary" invisible="statut != 'nouvelle'"/>
+                    <button name="action_annuler" string="Annuler" type="object" invisible="statut in ('terminee', 'annulee')"/>
+                    <field name="statut" widget="statusbar" statusbar_visible="nouvelle,planifiee,terminee"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="DI-0001"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="equipement_id"/>
+                            <field name="client_id"/>
+                            <field name="date_demande"/>
+                        </group>
+                        <group>
+                            <field name="urgence"/>
+                            <field name="origine"/>
+                        </group>
+                    </group>
+                    <group string="Description de la panne">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Interventions">
+                            <field name="intervention_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="date_planifiee"/>
+                                    <field name="statut"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cdt_demande_search" model="ir.ui.view">
+        <field name="name">cdt.demande.search</field>
+        <field name="model">cdt.demande</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="equipement_id"/>
+                <field name="client_id"/>
+                <filter name="filtre_nouvelles" string="Nouvelles" domain="[('statut', '=', 'nouvelle')]"/>
+                <filter name="filtre_urgentes" string="Urgentes" domain="[('urgence', '=', 'urgente')]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter name="groupe_urgence" string="Urgence" context="{'group_by': 'urgence'}"/>
+                    <filter name="groupe_statut" string="Statut" context="{'group_by': 'statut'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cdt_demande" model="ir.actions.act_window">
+        <field name="name">Demandes d'intervention</field>
+        <field name="res_model">cdt.demande</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_cdt_demandes" name="Demandes d'intervention" parent="menu_cdt_root"
+              action="action_cdt_demande" sequence="20"/>
+</odoo>
