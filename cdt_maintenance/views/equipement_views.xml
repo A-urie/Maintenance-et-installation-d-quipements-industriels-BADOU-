@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cdt_equipement_list" model="ir.ui.view">
+        <field name="name">cdt.equipement.list</field>
+        <field name="model">cdt.equipement</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="numero_serie"/>
+                <field name="type_equipement"/>
+                <field name="client_id"/>
+                <field name="date_installation"/>
+                <field name="fin_garantie"/>
+                <field name="etat" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cdt_equipement_form" model="ir.ui.view">
+        <field name="name">cdt.equipement.form</field>
+        <field name="model">cdt.equipement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_installer" string="Marquer installé" type="object" class="btn-primary" invisible="etat != 'brouillon'"/>
+                    <button name="action_mettre_en_maintenance" string="Mettre en maintenance" type="object" invisible="etat != 'installe'"/>
+                    <button name="action_retirer" string="Retirer" type="object" invisible="etat in ('brouillon', 'retire')"/>
+                    <field name="etat" widget="statusbar" statusbar_visible="brouillon,installe,en_maintenance,retire"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="EQ-001"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="numero_serie"/>
+                            <field name="type_equipement"/>
+                            <field name="client_id"/>
+                        </group>
+                        <group string="Installation et maintenance">
+                            <field name="date_installation"/>
+                            <field name="fin_garantie"/>
+                            <field name="frequence_maintenance"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cdt_equipement_search" model="ir.ui.view">
+        <field name="name">cdt.equipement.search</field>
+        <field name="model">cdt.equipement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="numero_serie"/>
+                <field name="client_id"/>
+                <filter name="filtre_installe" string="Installés" domain="[('etat', '=', 'installe')]"/>
+                <filter name="filtre_maintenance" string="En maintenance" domain="[('etat', '=', 'en_maintenance')]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter name="groupe_client" string="Client" context="{'group_by': 'client_id'}"/>
+                    <filter name="groupe_etat" string="État" context="{'group_by': 'etat'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cdt_equipement" model="ir.actions.act_window">
+        <field name="name">Équipements</field>
+        <field name="res_model">cdt.equipement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_cdt_root" name="CDT Maintenance" sequence="10"
+              groups="group_cdt_technicien,group_cdt_commercial"/>
+    <menuitem id="menu_cdt_equipements" name="Équipements" parent="menu_cdt_root"
+              action="action_cdt_equipement" sequence="10"/>
+</odoo>
