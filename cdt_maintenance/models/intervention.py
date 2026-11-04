@@ -8,7 +8,7 @@ class CdtIntervention(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "date_planifiee desc, id desc"
 
-    name = fields.Char(string="Référence", required=True, copy=False, tracking=True)
+    name = fields.Char(string="Référence", required=True, copy=False, readonly=True, default="Nouveau", tracking=True)
     demande_id = fields.Many2one("cdt.demande", string="Demande", ondelete="set null")
     equipement_id = fields.Many2one("cdt.equipement", string="Équipement", required=True, tracking=True)
     client_id = fields.Many2one(related="equipement_id.client_id", string="Client", store=True, readonly=True)
@@ -33,6 +33,13 @@ class CdtIntervention(models.Model):
         required=True,
         tracking=True,
     )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("name", "Nouveau") == "Nouveau":
+                vals["name"] = self.env["ir.sequence"].next_by_code("cdt.intervention") or "Nouveau"
+        return super().create(vals_list)
 
     @api.depends("date_debut", "date_fin")
     def _compute_duree(self):

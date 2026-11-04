@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class CdtDemande(models.Model):
@@ -7,7 +7,7 @@ class CdtDemande(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "date_demande desc"
 
-    name = fields.Char(string="Référence", required=True, copy=False, tracking=True)
+    name = fields.Char(string="Référence", required=True, copy=False, readonly=True, default="Nouveau", tracking=True)
     equipement_id = fields.Many2one("cdt.equipement", string="Équipement", required=True, tracking=True)
     client_id = fields.Many2one(related="equipement_id.client_id", string="Client", store=True, readonly=True)
     date_demande = fields.Datetime(string="Date de la demande", default=fields.Datetime.now)
@@ -44,10 +44,16 @@ class CdtDemande(models.Model):
     )
     intervention_ids = fields.One2many("cdt.intervention", "demande_id", string="Interventions")
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("name", "Nouveau") == "Nouveau":
+                vals["name"] = self.env["ir.sequence"].next_by_code("cdt.demande") or "Nouveau"
+        return super().create(vals_list)
+
     def action_planifier(self):
         for rec in self:
             self.env["cdt.intervention"].create({
-                "name": "Intervention " + rec.name,
                 "demande_id": rec.id,
                 "equipement_id": rec.equipement_id.id,
             })

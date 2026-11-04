@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_cdt_demande" model="ir.sequence">
+            <field name="name">Demande d'intervention</field>
+            <field name="code">cdt.demande</field>
+            <field name="prefix">DI-</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="seq_cdt_intervention" model="ir.sequence">
+            <field name="name">Intervention</field>
+            <field name="code">cdt.intervention</field>
+            <field name="prefix">INT-</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>
