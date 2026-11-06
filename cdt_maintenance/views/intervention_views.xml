@@ -40,6 +40,7 @@
                         </group>
                         <group string="Planning">
                             <field name="date_planifiee"/>
+                            <field name="duree_prevue"/>
                             <field name="date_debut"/>
                             <field name="date_fin"/>
                             <field name="duree"/>
@@ -54,6 +55,19 @@
                 </sheet>
                 <chatter/>
             </form>
+        </field>
+    </record>
+
+    <record id="view_cdt_intervention_calendar" model="ir.ui.view">
+        <field name="name">cdt.intervention.calendar</field>
+        <field name="model">cdt.intervention</field>
+        <field name="arch" type="xml">
+            <calendar string="Planning des interventions" date_start="date_planifiee" date_delay="duree_prevue" color="equipement_id" mode="week" event_open_popup="true" quick_create="0">
+                <field name="name"/>
+                <field name="equipement_id"/>
+                <field name="technicien_ids" widget="many2many_tags"/>
+                <field name="statut"/>
+            </calendar>
         </field>
     </record>
 
@@ -81,6 +95,14 @@
         <field name="view_mode">list,form</field>
     </record>
 
+    <record id="action_cdt_planning" model="ir.actions.act_window">
+        <field name="name">Planning</field>
+        <field name="res_model">cdt.intervention</field>
+        <field name="view_mode">calendar,list,form</field>
+    </record>
+
     <menuitem id="menu_cdt_interventions" name="Interventions" parent="menu_cdt_root"
               action="action_cdt_intervention" sequence="30"/>
+    <menuitem id="menu_cdt_planning" name="Planning" parent="menu_cdt_root"
+              action="action_cdt_planning" sequence="25"/>
 </odoo>
