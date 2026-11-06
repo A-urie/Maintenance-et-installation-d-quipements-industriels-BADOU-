@@ -8,3 +8,9 @@ access_cdt_demande_chef,cdt.demande chef,model_cdt_demande,group_cdt_chef,1,1,1,
 access_cdt_intervention_technicien,cdt.intervention technicien,model_cdt_intervention,group_cdt_technicien,1,1,1,0
 access_cdt_intervention_commercial,cdt.intervention commercial,model_cdt_intervention,group_cdt_commercial,1,0,0,0
 access_cdt_intervention_chef,cdt.intervention chef,model_cdt_intervention,group_cdt_chef,1,1,1,1
+access_cdt_installation_technicien,cdt.installation technicien,model_cdt_installation,group_cdt_technicien,1,1,0,0
+access_cdt_installation_commercial,cdt.installation commercial,model_cdt_installation,group_cdt_commercial,1,1,1,0
+access_cdt_installation_chef,cdt.installation chef,model_cdt_installation,group_cdt_chef,1,1,1,1
+access_cdt_installation_etape_technicien,cdt.installation.etape technicien,model_cdt_installation_etape,group_cdt_technicien,1,1,0,0
+access_cdt_installation_etape_commercial,cdt.installation.etape commercial,model_cdt_installation_etape,group_cdt_commercial,1,1,1,0
+access_cdt_installation_etape_chef,cdt.installation.etape chef,model_cdt_installation_etape,group_cdt_chef,1,1,1,1

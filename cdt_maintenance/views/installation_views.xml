@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cdt_installation_list" model="ir.ui.view">
+        <field name="name">cdt.installation.list</field>
+        <field name="model">cdt.installation</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="equipement_id"/>
+                <field name="date_prevue"/>
+                <field name="avancement" widget="progressbar"/>
+                <field name="etat" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cdt_installation_form" model="ir.ui.view">
+        <field name="name">cdt.installation.form</field>
+        <field name="model">cdt.installation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_receptionner" string="Réceptionner" type="object" class="btn-primary" invisible="etat != 'en_cours'"/>
+                    <button name="action_annuler" string="Annuler" type="object" invisible="etat != 'en_cours'"/>
+                    <field name="etat" widget="statusbar" statusbar_visible="en_cours,receptionnee"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Dossier">
+                            <field name="client_id"/>
+                            <field name="equipement_id"/>
+                            <field name="technicien_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Suivi">
+                            <field name="date_prevue"/>
+                            <field name="date_reception"/>
+                            <field name="avancement" widget="progressbar"/>
+                            <field name="pv_signe"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Étapes">
+                            <field name="etape_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="date_reelle"/>
+                                    <field name="statut"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cdt_installation_search" model="ir.ui.view">
+        <field name="name">cdt.installation.search</field>
+        <field name="model">cdt.installation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="equipement_id"/>
+                <filter name="filtre_en_cours" string="En cours" domain="[('etat', '=', 'en_cours')]"/>
+                <filter name="filtre_receptionnees" string="Réceptionnées" domain="[('etat', '=', 'receptionnee')]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter name="groupe_client" string="Client" context="{'group_by': 'client_id'}"/>
+                    <filter name="groupe_etat" string="État" context="{'group_by': 'etat'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cdt_installation" model="ir.actions.act_window">
+        <field name="name">Installations</field>
+        <field name="res_model">cdt.installation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_cdt_installations" name="Installations" parent="menu_cdt_root"
+              action="action_cdt_installation" sequence="15"/>
+</odoo>

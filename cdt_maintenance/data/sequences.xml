@@ -13,5 +13,11 @@
             <field name="prefix">INT-</field>
             <field name="padding">4</field>
         </record>
+        <record id="seq_cdt_installation" model="ir.sequence">
+            <field name="name">Dossier d'installation</field>
+            <field name="code">cdt.installation</field>
+            <field name="prefix">IN-</field>
+            <field name="padding">4</field>
+        </record>
     </data>
 </odoo>
