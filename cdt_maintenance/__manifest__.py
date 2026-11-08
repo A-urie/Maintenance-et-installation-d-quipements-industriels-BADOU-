@@ -11,6 +11,7 @@
         "security/ir.model.access.csv",
         "data/sequences.xml",
         "views/equipement_views.xml",
+        "views/piece_views.xml",
         "views/installation_views.xml",
         "views/demande_views.xml",
         "views/intervention_views.xml",

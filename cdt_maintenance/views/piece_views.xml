@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cdt_piece_list" model="ir.ui.view">
+        <field name="name">cdt.piece.list</field>
+        <field name="model">cdt.piece</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="en_alerte">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="origine"/>
+                <field name="quantite_stock"/>
+                <field name="seuil_alerte"/>
+                <field name="cout_unitaire"/>
+                <field name="en_alerte" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cdt_piece_form" model="ir.ui.view">
+        <field name="name">cdt.piece.form</field>
+        <field name="model">cdt.piece</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Tamis 12 mm"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="reference"/>
+                            <field name="origine"/>
+                        </group>
+                        <group string="Stock">
+                            <field name="quantite_stock"/>
+                            <field name="seuil_alerte"/>
+                            <field name="cout_unitaire"/>
+                            <field name="en_alerte"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cdt_piece_search" model="ir.ui.view">
+        <field name="name">cdt.piece.search</field>
+        <field name="model">cdt.piece</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="reference"/>
+                <filter name="filtre_alerte" string="Sous le seuil" domain="[('en_alerte', '=', True)]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter name="groupe_origine" string="Origine" context="{'group_by': 'origine'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cdt_piece" model="ir.actions.act_window">
+        <field name="name">Pièces de rechange</field>
+        <field name="res_model">cdt.piece</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_cdt_pieces" name="Pièces de rechange" parent="menu_cdt_root"
+              action="action_cdt_piece" sequence="40" groups="group_cdt_technicien"/>
+</odoo>

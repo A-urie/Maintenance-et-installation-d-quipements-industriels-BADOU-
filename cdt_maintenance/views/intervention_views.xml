@@ -52,6 +52,17 @@
                         <field name="cout"/>
                         <field name="validation_client"/>
                     </group>
+                    <notebook>
+                        <page string="Pièces utilisées">
+                            <field name="piece_ids">
+                                <list editable="bottom">
+                                    <field name="piece_id"/>
+                                    <field name="quantite"/>
+                                    <field name="cout_unitaire"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
                 <chatter/>
             </form>

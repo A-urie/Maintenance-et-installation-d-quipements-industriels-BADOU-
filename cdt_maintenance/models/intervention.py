@@ -1,5 +1,5 @@
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class CdtIntervention(models.Model):
@@ -22,6 +22,7 @@ class CdtIntervention(models.Model):
     travaux = fields.Text(string="Travaux réalisés")
     cout = fields.Float(string="Coût")
     validation_client = fields.Boolean(string="Validée par le client")
+    piece_ids = fields.One2many("cdt.intervention.piece", "intervention_id", string="Pièces utilisées")
     statut = fields.Selection(
         [
             ("planifiee", "Planifiée"),
@@ -60,4 +61,17 @@ class CdtIntervention(models.Model):
         self.write({"statut": "en_cours", "date_debut": fields.Datetime.now()})
 
     def action_cloturer(self):
+        for rec in self:
+            besoins = {}
+            for ligne in rec.piece_ids:
+                besoins[ligne.piece_id] = besoins.get(ligne.piece_id, 0.0) + ligne.quantite
+            for piece, quantite in besoins.items():
+                if piece.quantite_stock < quantite:
+                    raise UserError(
+                        "Stock insuffisant pour la pièce « %s » (disponible : %s, demandé : %s)."
+                        % (piece.name, piece.quantite_stock, quantite)
+                    )
+            for piece, quantite in besoins.items():
+                piece.quantite_stock -= quantite
+                piece.sudo().quantite_stock -= quantite
         self.write({"statut": "terminee", "date_fin": fields.Datetime.now()})
