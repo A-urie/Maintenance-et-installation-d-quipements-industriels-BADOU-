@@ -19,3 +19,5 @@ access_cdt_piece_chef,cdt.piece chef,model_cdt_piece,group_cdt_chef,1,1,1,1
 access_cdt_intervention_piece_technicien,cdt.intervention.piece technicien,model_cdt_intervention_piece,group_cdt_technicien,1,1,1,1
 access_cdt_intervention_piece_commercial,cdt.intervention.piece commercial,model_cdt_intervention_piece,group_cdt_commercial,1,0,0,0
 access_cdt_intervention_piece_chef,cdt.intervention.piece chef,model_cdt_intervention_piece,group_cdt_chef,1,1,1,1
+access_cdt_alerte_technicien,cdt.alerte technicien,model_cdt_alerte,group_cdt_technicien,1,1,0,0
+access_cdt_alerte_chef,cdt.alerte chef,model_cdt_alerte,group_cdt_chef,1,1,1,1
