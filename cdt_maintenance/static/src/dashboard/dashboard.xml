@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cdt_maintenance.Dashboard">
+        <div class="o_action cdt-dashboard">
+            <h1 class="cdt-title">Tableau de bord</h1>
+            <div class="cdt-kpis">
+                <div class="cdt-card cdt-click" t-on-click="ouvrirPlanning">
+                    <div class="cdt-label">Interventions du mois</div>
+                    <div class="cdt-value" t-out="state.data.interventions_mois"/>
+                </div>
+                <div class="cdt-card cdt-urgent">
+                    <div class="cdt-label">Urgences ouvertes</div>
+                    <div class="cdt-value" t-out="state.data.urgences_ouvertes"/>
+                </div>
+                <div class="cdt-card">
+                    <div class="cdt-label">Respect du planning</div>
+                    <div class="cdt-value"><t t-out="state.data.respect_planning"/> %</div>
+                </div>
+                <div class="cdt-card">
+                    <div class="cdt-label">Installations en cours</div>
+                    <div class="cdt-value" t-out="state.data.installations_en_cours"/>
+                </div>
+            </div>
+            <div class="cdt-row">
+                <div class="cdt-panel">
+                    <h2>Interventions par mois</h2>
+                    <div class="cdt-chart">
+                        <t t-foreach="state.data.par_mois" t-as="m" t-key="m.label">
+                            <div class="cdt-col">
+                                <span class="cdt-num" t-out="m.valeur"/>
+                                <div class="cdt-bar" t-attf-style="height: {{ barHeight(m.valeur) }}px"/>
+                                <span class="cdt-month" t-out="m.label"/>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div class="cdt-panel cdt-click" t-on-click="ouvrirAlertes">
+                    <h2>Alertes à traiter</h2>
+                    <div class="cdt-value cdt-alert-count" t-out="state.data.alertes_a_traiter"/>
+                    <div class="cdt-label">Cliquer pour voir la liste</div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

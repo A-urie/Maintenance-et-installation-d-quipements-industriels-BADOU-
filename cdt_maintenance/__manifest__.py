@@ -12,12 +12,20 @@
         "data/sequences.xml",
         "data/cron.xml",
         "views/equipement_views.xml",
+        "views/dashboard_views.xml",
         "views/piece_views.xml",
         "views/alerte_views.xml",
         "views/installation_views.xml",
         "views/demande_views.xml",
         "views/intervention_views.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "cdt_maintenance/static/src/dashboard/dashboard.js",
+            "cdt_maintenance/static/src/dashboard/dashboard.xml",
+            "cdt_maintenance/static/src/dashboard/dashboard.scss",
+        ],
+    },
     "installable": True,
     "application": True,
 }

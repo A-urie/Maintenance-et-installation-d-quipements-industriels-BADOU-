@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_cdt_dashboard" model="ir.actions.client">
+        <field name="name">Tableau de bord</field>
+        <field name="tag">cdt_maintenance.dashboard</field>
+    </record>
+
+    <menuitem id="menu_cdt_dashboard" name="Tableau de bord" parent="menu_cdt_root"
+              action="action_cdt_dashboard" sequence="5" groups="group_cdt_chef"/>
+</odoo>
