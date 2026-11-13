@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_intervention" model="ir.actions.report">
+        <field name="name">Fiche d'intervention</field>
+        <field name="model">cdt.intervention</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cdt_maintenance.report_intervention_document</field>
+        <field name="report_file">cdt_maintenance.report_intervention_document</field>
+        <field name="print_report_name">'Fiche_%s' % (object.name or 'intervention')</field>
+        <field name="binding_model_id" ref="model_cdt_intervention"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_intervention_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Fiche d'intervention <span t-field="o.name"/></h2>
+                        <table class="table table-sm mt-3">
+                            <tr>
+                                <th style="width: 30%;">Client</th>
+                                <td><span t-field="o.client_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Équipement</th>
+                                <td><span t-field="o.equipement_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Techniciens</th>
+                                <td>
+                                    <t t-foreach="o.technicien_ids" t-as="t">
+                                        <span t-out="t.name"/><t t-if="not t_last">, </t>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Date planifiée</th>
+                                <td><span t-field="o.date_planifiee"/></td>
+                            </tr>
+                            <tr>
+                                <th>Début / Fin</th>
+                                <td><span t-field="o.date_debut"/> / <span t-field="o.date_fin"/></td>
+                            </tr>
+                            <tr>
+                                <th>Durée réelle (heures)</th>
+                                <td><span t-field="o.duree"/></td>
+                            </tr>
+                        </table>
+
+                        <h4 class="mt-4">Cause de la panne</h4>
+                        <p t-field="o.cause_panne"/>
+
+                        <h4 class="mt-3">Travaux réalisés</h4>
+                        <p t-field="o.travaux"/>
+
+                        <h4 class="mt-3">Pièces utilisées</h4>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Pièce</th>
+                                    <th class="text-end">Quantité</th>
+                                    <th class="text-end">Coût unitaire</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.piece_ids" t-as="l">
+                                    <tr>
+                                        <td><span t-field="l.piece_id"/></td>
+                                        <td class="text-end"><span t-field="l.quantite"/></td>
+                                        <td class="text-end"><span t-field="l.cout_unitaire"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <p class="mt-3">
+                            <strong>Coût total : </strong><span t-field="o.cout"/>
+                        </p>
+
+                        <div class="row mt-5">
+                            <div class="col-6">
+                                <p><strong>Signature du technicien</strong></p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Signature du client</strong></p>
+                                <p t-if="o.validation_client">Fiche validée par le client</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

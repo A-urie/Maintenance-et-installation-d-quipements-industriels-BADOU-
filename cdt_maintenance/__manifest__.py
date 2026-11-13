@@ -18,6 +18,7 @@
         "views/installation_views.xml",
         "views/demande_views.xml",
         "views/intervention_views.xml",
+        "report/intervention_report.xml",
     ],
     "assets": {
         "web.assets_backend": [
