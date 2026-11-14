@@ -19,5 +19,11 @@
             <field name="prefix">IN-</field>
             <field name="padding">4</field>
         </record>
+        <record id="seq_cdt_cotation" model="ir.sequence">
+            <field name="name">Cotation</field>
+            <field name="code">cdt.cotation</field>
+            <field name="prefix">CO-</field>
+            <field name="padding">4</field>
+        </record>
     </data>
 </odoo>

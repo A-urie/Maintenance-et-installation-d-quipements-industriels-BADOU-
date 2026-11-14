@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cdt_contrat_list" model="ir.ui.view">
+        <field name="name">cdt.contrat.list</field>
+        <field name="model">cdt.contrat</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="jours_restants &lt; 0" decoration-warning="jours_restants &gt;= 0 and jours_restants &lt; 30">
+                <field name="name"/>
+                <field name="type_contrat"/>
+                <field name="prestataire_id"/>
+                <field name="date_fin"/>
+                <field name="jours_restants"/>
+                <field name="montant"/>
+                <field name="note_moyenne"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cdt_contrat_form" model="ir.ui.view">
+        <field name="name">cdt.contrat.form</field>
+        <field name="model">cdt.contrat</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_renouveler" string="Renouveler (1 an)" type="object" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-warning" role="alert" invisible="not a_revoir">
+                        Ce prestataire a reçu plusieurs mauvaises évaluations : à revoir.
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="CT-001"/></h1>
+                    </div>
+                    <group>
+                        <group string="Contrat">
+                            <field name="type_contrat"/>
+                            <field name="prestataire_id"/>
+                            <field name="montant"/>
+                        </group>
+                        <group string="Durée">
+                            <field name="date_debut"/>
+                            <field name="date_fin"/>
+                            <field name="jours_restants"/>
+                            <field name="note_moyenne"/>
+                            <field name="a_revoir"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Équipements couverts">
+                            <field name="equipement_ids"/>
+                        </page>
+                        <page string="Évaluations">
+                            <field name="evaluation_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="note"/>
+                                    <field name="commentaire"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cdt_contrat_search" model="ir.ui.view">
+        <field name="name">cdt.contrat.search</field>
+        <field name="model">cdt.contrat</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="prestataire_id"/>
+                <filter name="filtre_maintenance" string="Maintenance" domain="[('type_contrat', '=', 'maintenance')]"/>
+                <filter name="filtre_fourniture" string="Fourniture" domain="[('type_contrat', '=', 'fourniture')]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter name="groupe_prestataire" string="Prestataire" context="{'group_by': 'prestataire_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cdt_contrat" model="ir.actions.act_window">
+        <field name="name">Contrats et prestataires</field>
+        <field name="res_model">cdt.contrat</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_cdt_contrats" name="Contrats" parent="menu_cdt_root"
+              action="action_cdt_contrat" sequence="60" groups="group_cdt_chef"/>
+</odoo>

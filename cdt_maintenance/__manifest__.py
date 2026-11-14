@@ -15,6 +15,8 @@
         "views/dashboard_views.xml",
         "views/piece_views.xml",
         "views/alerte_views.xml",
+        "views/contrat_views.xml",
+        "views/cotation_views.xml",
         "views/installation_views.xml",
         "views/demande_views.xml",
         "views/intervention_views.xml",

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cdt_cotation_list" model="ir.ui.view">
+        <field name="name">cdt.cotation.list</field>
+        <field name="model">cdt.cotation</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="piece_id"/>
+                <field name="quantite"/>
+                <field name="fournisseur_retenu_id"/>
+                <field name="montant_retenu"/>
+                <field name="statut" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cdt_cotation_form" model="ir.ui.view">
+        <field name="name">cdt.cotation.form</field>
+        <field name="model">cdt.cotation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_retenir_moins_chere" string="Retenir la moins chère" type="object" invisible="statut != 'brouillon'"/>
+                    <button name="action_valider" string="Valider" type="object" class="btn-primary" invisible="statut != 'brouillon'"/>
+                    <button name="action_recevoir" string="Réceptionner" type="object" class="btn-primary" invisible="statut != 'validee'"/>
+                    <button name="action_annuler" string="Annuler" type="object" invisible="statut in ('recue', 'annulee')"/>
+                    <field name="statut" widget="statusbar" statusbar_visible="brouillon,validee,recue"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="piece_id"/>
+                            <field name="quantite"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="fournisseur_retenu_id"/>
+                            <field name="montant_retenu"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Offres des fournisseurs">
+                            <field name="ligne_ids">
+                                <list editable="bottom">
+                                    <field name="fournisseur_id"/>
+                                    <field name="prix_unitaire"/>
+                                    <field name="delai_jours"/>
+                                    <field name="total"/>
+                                    <field name="retenue"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cdt_cotation" model="ir.actions.act_window">
+        <field name="name">Cotations</field>
+        <field name="res_model">cdt.cotation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_cdt_cotations" name="Cotations" parent="menu_cdt_root"
+              action="action_cdt_cotation" sequence="45" groups="group_cdt_chef"/>
+</odoo>

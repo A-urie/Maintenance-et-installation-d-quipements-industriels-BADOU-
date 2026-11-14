@@ -21,3 +21,9 @@ access_cdt_intervention_piece_commercial,cdt.intervention.piece commercial,model
 access_cdt_intervention_piece_chef,cdt.intervention.piece chef,model_cdt_intervention_piece,group_cdt_chef,1,1,1,1
 access_cdt_alerte_technicien,cdt.alerte technicien,model_cdt_alerte,group_cdt_technicien,1,1,0,0
 access_cdt_alerte_chef,cdt.alerte chef,model_cdt_alerte,group_cdt_chef,1,1,1,1
+access_cdt_contrat_technicien,cdt.contrat technicien,model_cdt_contrat,group_cdt_technicien,1,0,0,0
+access_cdt_contrat_chef,cdt.contrat chef,model_cdt_contrat,group_cdt_chef,1,1,1,1
+access_cdt_contrat_evaluation_technicien,cdt.contrat.evaluation technicien,model_cdt_contrat_evaluation,group_cdt_technicien,1,0,0,0
+access_cdt_contrat_evaluation_chef,cdt.contrat.evaluation chef,model_cdt_contrat_evaluation,group_cdt_chef,1,1,1,1
+access_cdt_cotation_chef,cdt.cotation chef,model_cdt_cotation,group_cdt_chef,1,1,1,1
+access_cdt_cotation_ligne_chef,cdt.cotation.ligne chef,model_cdt_cotation_ligne,group_cdt_chef,1,1,1,1
