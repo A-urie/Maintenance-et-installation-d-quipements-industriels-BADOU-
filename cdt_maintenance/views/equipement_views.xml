@@ -28,6 +28,14 @@
                     <field name="etat" widget="statusbar" statusbar_visible="brouillon,installe,en_maintenance,retire"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_voir_interventions" type="object" class="oe_stat_button" icon="fa-wrench">
+                            <field name="intervention_count" widget="statinfo" string="Interventions"/>
+                        </button>
+                        <button name="action_voir_demandes" type="object" class="oe_stat_button" icon="fa-phone">
+                            <field name="demande_count" widget="statinfo" string="Demandes"/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <label for="name"/>
                         <h1><field name="name" placeholder="EQ-001"/></h1>

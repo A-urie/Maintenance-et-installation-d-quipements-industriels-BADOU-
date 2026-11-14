@@ -31,10 +31,41 @@ class CdtEquipement(models.Model):
         tracking=True,
     )
     active = fields.Boolean(default=True)
+    intervention_ids = fields.One2many("cdt.intervention", "equipement_id", string="Interventions")
+    demande_ids = fields.One2many("cdt.demande", "equipement_id", string="Demandes")
+    intervention_count = fields.Integer(string="Interventions", compute="_compute_counts")
+    demande_count = fields.Integer(string="Demandes", compute="_compute_counts")
 
     _sql_constraints = [
         ("numero_serie_unique", "unique(numero_serie)", "Ce numéro de série existe déjà."),
     ]
+
+    def _compute_counts(self):
+        for rec in self:
+            rec.intervention_count = len(rec.intervention_ids)
+            rec.demande_count = len(rec.demande_ids)
+
+    def action_voir_interventions(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Historique des interventions",
+            "res_model": "cdt.intervention",
+            "view_mode": "list,form",
+            "domain": [("equipement_id", "=", self.id)],
+            "context": {"default_equipement_id": self.id},
+        }
+
+    def action_voir_demandes(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Historique des demandes",
+            "res_model": "cdt.demande",
+            "view_mode": "list,form",
+            "domain": [("equipement_id", "=", self.id)],
+            "context": {"default_equipement_id": self.id},
+        }
 
     def action_installer(self):
         self.write({"etat": "installe"})
